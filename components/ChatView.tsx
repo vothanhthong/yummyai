@@ -229,13 +229,13 @@ export const ChatView: React.FC<ChatViewProps> = ({
           <div ref={loadMoreTriggerRef} className="flex justify-center py-4">
             {isLoadingMore ? (
               <div className="flex items-center gap-2 text-gray-400 text-sm">
-                <div className="w-4 h-4 border-2 border-gray-300 border-t-lime-600 rounded-full animate-spin"></div>
+                <div className="w-4 h-4 border-2 border-gray-300 border-t-orange-500 rounded-full animate-spin"></div>
                 <span>Đang tải tin nhắn cũ...</span>
               </div>
             ) : (
               <button
                 onClick={loadMoreMessages}
-                className="text-lime-600 text-sm font-medium hover:underline"
+                className="text-orange-500 text-sm font-medium hover:underline"
               >
                 Tải thêm tin nhắn cũ
               </button>
@@ -253,7 +253,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
             <div
               className={`max-w-[85%] md:max-w-[80%] p-3.5 md:p-5 rounded-2xl shadow-sm ${
                 msg.role === "user"
-                  ? "bg-lime-600 text-white rounded-tr-none"
+                  ? "bg-orange-500 text-white rounded-tr-none"
                   : "bg-gray-100 text-gray-800 rounded-tl-none"
               }`}
             >
@@ -278,15 +278,15 @@ export const ChatView: React.FC<ChatViewProps> = ({
           <div className="flex justify-start">
             <div className="bg-gray-100 p-4 rounded-2xl rounded-tl-none flex gap-1.5 shadow-sm">
               <div
-                className="w-1.5 h-1.5 bg-lime-500 rounded-full animate-bounce"
+                className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-bounce"
                 style={{ animationDelay: "0ms" }}
               />
               <div
-                className="w-1.5 h-1.5 bg-lime-500 rounded-full animate-bounce"
+                className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-bounce"
                 style={{ animationDelay: "150ms" }}
               />
               <div
-                className="w-1.5 h-1.5 bg-lime-500 rounded-full animate-bounce"
+                className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-bounce"
                 style={{ animationDelay: "300ms" }}
               />
             </div>
@@ -302,7 +302,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
               key={index}
               onClick={() => handleSend(suggestion.prompt)}
               disabled={isLoading}
-              className="whitespace-nowrap px-4 py-2 bg-lime-50 hover:bg-lime-100 text-lime-700 border border-lime-100 rounded-full text-[11px] md:text-xs font-bold transition-all disabled:opacity-50 shrink-0 shadow-sm"
+              className="whitespace-nowrap px-4 py-2 bg-orange-50 hover:bg-orange-100 text-orange-600 border border-orange-100 rounded-full text-[11px] md:text-xs font-bold transition-all disabled:opacity-50 shrink-0 shadow-sm"
             >
               {suggestion.label}
             </button>
@@ -316,12 +316,12 @@ export const ChatView: React.FC<ChatViewProps> = ({
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
             placeholder="Bạn muốn nấu gì hôm nay?..."
-            className="flex-1 min-w-0 px-5 py-4 bg-gray-50 text-gray-900 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:bg-white transition-all text-sm md:text-base shadow-inner"
+            className="flex-1 min-w-0 px-5 py-4 bg-gray-50 text-gray-900 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-sm md:text-base shadow-inner"
           />
           <button
             onClick={() => handleSend()}
             disabled={!input.trim() || isLoading}
-            className="flex-shrink-0 p-4 bg-lime-600 text-white rounded-2xl hover:bg-lime-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-lg shadow-lime-100 active:scale-95"
+            className="flex-shrink-0 p-4 bg-orange-500 text-white rounded-2xl hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-lg shadow-orange-100 active:scale-95"
             aria-label="Send"
           >
             <Icons.Send />

@@ -197,3 +197,150 @@ export const getChatResponse = async (
     };
   }
 };
+
+// Generate meal plan for a week
+export const generateMealPlan = async (
+  preferences?: string
+): Promise<{ meals: { date: string; mealType: string; recipe: Recipe }[]; text: string } | null> => {
+  try {
+    if (!API_KEY) {
+      throw new Error("OpenRouter API key not configured");
+    }
+
+    const today = new Date();
+    const days = [];
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      days.push(d.toISOString().split("T")[0]);
+    }
+
+    const MEAL_PLAN_PROMPT = `
+Bạn là YummyAI, chuyên gia lên thực đơn tuần cho gia đình Việt Nam.
+Hãy tạo thực đơn cho 7 ngày tới với 3 bữa mỗi ngày (sáng, trưa, tối).
+
+${preferences ? `Yêu cầu của người dùng: ${preferences}` : ""}
+
+QUY TẮC QUAN TRỌNG:
+
+1. BỮA SÁNG (breakfast): Món đơn, nhanh gọn
+   - Ví dụ: Phở, Bún bò, Xôi, Bánh mì, Cháo, Hủ tiếu...
+   - Đây là món ăn đơn lẻ
+
+2. BỮA TRƯA & TỐI (lunch/dinner): MÂM CƠM GIA ĐÌNH gồm 3 THÀNH PHẦN:
+   - CANH: Canh chua, Canh rau, Canh xương, Súp...
+   - MÓN MẶN: Kho, Rim, Chiên, Nướng, Hấp... (thịt/cá/hải sản)
+   - RAU: Rau luộc, Rau xào, Salad...
+   
+   Tên món phải ghi theo format: "Mâm cơm: [Món mặn], [Canh] & [Rau]"
+   Ví dụ: "Mâm cơm: Cá kho tộ, Canh chua cá lóc & Rau muống xào tỏi"
+   
+   Trong "ingredients" liệt kê nguyên liệu CHO CẢ 3 MÓN.
+   Trong "instructions" chia thành các phần: "Món mặn:", "Canh:", "Rau:".
+
+3. KHÔNG lặp lại món trong tuần
+4. Đa dạng nguyên liệu: thịt heo, gà, bò, cá, tôm, đậu hũ...
+5. Nguyên liệu dễ tìm tại Việt Nam
+
+Trả về JSON theo format:
+{
+  "text": "Lời giới thiệu thực đơn tuần...",
+  "meals": [
+    {
+      "date": "${days[0]}",
+      "mealType": "breakfast",
+      "recipe": {
+        "name": "Tên món (ví dụ: Phở bò)",
+        "description": "Mô tả ngắn",
+        "cooking_time": 30,
+        "difficulty": "Dễ",
+        "meal_type": "Bữa sáng",
+        "ingredients": [{"item": "Nguyên liệu", "amount": "Số lượng"}],
+        "instructions": ["Bước 1...", "Bước 2..."],
+        "tips": ["Mẹo 1..."]
+      }
+    },
+    {
+      "date": "${days[0]}",
+      "mealType": "lunch",
+      "recipe": {
+        "name": "Mâm cơm: Thịt kho trứng, Canh bí đao & Rau cải luộc",
+        "description": "Mâm cơm gia đình đầy đủ dinh dưỡng",
+        "cooking_time": 60,
+        "difficulty": "Trung bình",
+        "meal_type": "Bữa trưa",
+        "ingredients": [{"item": "Thịt ba chỉ", "amount": "300g"}, {"item": "Trứng", "amount": "4 quả"}],
+        "instructions": ["MÓN MẶN - Thịt kho trứng:", "Bước 1...", "CANH:", "Bước 1...", "RAU:", "Bước 1..."],
+        "tips": ["Mẹo 1..."]
+      }
+    }
+  ]
+}
+
+Ngày trong tuần: ${days.join(", ")}
+mealType phải là: breakfast, lunch, hoặc dinner
+Tạo đúng 21 entry (7 ngày x 3 bữa).
+`;
+
+
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": typeof window !== "undefined" ? window.location.href : "",
+        "X-Title": "YummyAI",
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        messages: [
+          { role: "system", content: MEAL_PLAN_PROMPT },
+          { role: "user", content: preferences || "Hãy lên thực đơn tuần cho gia đình 2-4 người." },
+        ],
+        temperature: 0.8,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const content = data.choices[0]?.message?.content;
+
+    if (!content) {
+      throw new Error("No content");
+    }
+
+    // Clean up
+    let cleaned = content.trim();
+    if (cleaned.startsWith("```json")) cleaned = cleaned.slice(7);
+    if (cleaned.startsWith("```")) cleaned = cleaned.slice(3);
+    if (cleaned.endsWith("```")) cleaned = cleaned.slice(0, -3);
+    cleaned = cleaned.trim();
+
+    const result = JSON.parse(cleaned);
+
+    // Ensure recipes have IDs
+    if (result.meals) {
+      result.meals = result.meals.map((m: any, i: number) => ({
+        ...m,
+        recipe: {
+          ...m.recipe,
+          id: m.recipe?.id || `ai_plan_${Date.now()}_${i}`,
+          name: m.recipe?.name || "Món ăn",
+          cooking_time: m.recipe?.cooking_time || 30,
+          difficulty: m.recipe?.difficulty || "Trung bình",
+          ingredients: m.recipe?.ingredients || [],
+          instructions: m.recipe?.instructions || [],
+          tips: m.recipe?.tips || [],
+        },
+      }));
+    }
+
+    return result;
+  } catch (error) {
+    console.error("Meal plan generation error:", error);
+    return null;
+  }
+};

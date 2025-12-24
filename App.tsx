@@ -4,6 +4,7 @@ import { Icons, COLORS } from "./constants";
 import { ChatView } from "./components/ChatView";
 import { CookBookView } from "./components/CookBookView";
 import { QuickSuggestionsView } from "./components/QuickSuggestionsView";
+import { MealPlanView } from "./components/MealPlanView";
 import { RecipeModal } from "./components/RecipeModal";
 import { AuthModal } from "./components/AuthModal";
 import {
@@ -226,7 +227,7 @@ const App: React.FC = () => {
           onClick={() => { setActiveTab(Tab.CHAT); setIsSidebarOpen(false); }}
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
         >
-          <div className="bg-lime-600 p-2 rounded-xl text-white shadow-lg shadow-lime-100 flex items-center justify-center">
+          <div className="bg-orange-500 p-2 rounded-xl text-white shadow-lg shadow-orange-100 flex items-center justify-center">
             <Icons.Logo className="w-[22px] h-[22px]" />
           </div>
           <span className="text-xl font-black text-gray-800 tracking-tight">
@@ -249,7 +250,7 @@ const App: React.FC = () => {
           }}
           className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all ${
             activeTab === Tab.CHAT
-              ? "bg-lime-50 text-lime-700 font-bold shadow-sm shadow-lime-100"
+              ? "bg-orange-50 text-orange-600 font-bold shadow-sm shadow-orange-100"
               : "text-gray-500 hover:bg-gray-50"
           }`}
         >
@@ -263,14 +264,14 @@ const App: React.FC = () => {
           }}
           className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all ${
             activeTab === Tab.COOKBOOK
-              ? "bg-lime-50 text-lime-700 font-bold shadow-sm shadow-lime-100"
+              ? "bg-orange-50 text-orange-600 font-bold shadow-sm shadow-orange-100"
               : "text-gray-500 hover:bg-gray-50"
           }`}
         >
           <Icons.Book />
           <span className="text-sm">Sổ Tay Nấu Ăn</span>
           {cookBook.length > 0 && (
-            <span className="ml-auto bg-lime-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">
+            <span className="ml-auto bg-orange-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">
               {cookBook.length}
             </span>
           )}
@@ -283,17 +284,33 @@ const App: React.FC = () => {
             }}
             className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all ${
               activeTab === Tab.SUGGESTIONS
-                ? "bg-lime-50 text-lime-700 font-bold shadow-sm shadow-lime-100"
+                ? "bg-orange-50 text-orange-600 font-bold shadow-sm shadow-orange-100"
                 : "text-gray-500 hover:bg-gray-50"
             }`}
           >
             <Icons.Logo className="w-6 h-6" />
             <span className="text-sm">Gợi Ý Nhanh</span>
             {quickSuggestions.length > 0 && (
-              <span className="ml-auto bg-lime-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">
+              <span className="ml-auto bg-orange-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">
                 {quickSuggestions.length}
               </span>
             )}
+          </button>
+        )}
+        {user && (
+          <button
+            onClick={() => {
+              setActiveTab(Tab.MEAL_PLAN);
+              setIsSidebarOpen(false);
+            }}
+            className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all ${
+              activeTab === Tab.MEAL_PLAN
+                ? "bg-orange-50 text-orange-600 font-bold shadow-sm shadow-orange-100"
+                : "text-gray-500 hover:bg-gray-50"
+            }`}
+          >
+            <Icons.Calendar />
+            <span className="text-sm">Thực Đơn Tuần</span>
           </button>
         )}
       </nav>
@@ -304,7 +321,7 @@ const App: React.FC = () => {
             {/* User Profile with Menu */}
             <div className="relative">
               <div className="flex items-center gap-3 px-2 py-3 bg-gray-50 rounded-2xl">
-                <div className="w-10 h-10 rounded-full bg-lime-600 flex items-center justify-center text-white shadow-sm border-2 border-white">
+                <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white shadow-sm border-2 border-white">
                   <Icons.User className="w-5 h-5" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -370,12 +387,12 @@ const App: React.FC = () => {
 
   return (
     <div
-      className="flex bg-lime-50 overflow-hidden font-sans w-full"
+      className="flex bg-gray-100 overflow-hidden font-sans w-full"
       style={{ height: "var(--app-height, 100vh)" }}
     >
       {showToast && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[200] bg-gray-900/95 text-white px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-top-4 duration-300 whitespace-nowrap w-max max-w-[90vw]">
-          <div className="text-lime-500 shrink-0">
+          <div className="text-orange-500 shrink-0">
             <Icons.Check />
           </div>
           <span className="text-sm font-bold truncate">{showToast}</span>
@@ -450,13 +467,13 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      <main className="flex-1 flex flex-col min-w-0 bg-white lg:bg-lime-50 relative h-full">
+      <main className="flex-1 flex flex-col min-w-0 bg-white lg:bg-gray-100 relative h-full">
         <header className="lg:hidden flex items-center justify-between px-5 h-16 bg-white border-b border-gray-100 shrink-0 z-50">
           <button 
             onClick={() => setActiveTab(Tab.CHAT)}
             className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
           >
-            <div className="bg-lime-600 p-1.5 rounded-xl text-white shadow-md shadow-lime-100 flex items-center justify-center">
+            <div className="bg-orange-500 p-1.5 rounded-xl text-white shadow-md shadow-orange-100 flex items-center justify-center">
               <Icons.Logo className="w-[18px] h-[18px]" />
             </div>
             <span className="text-lg font-black text-gray-800 tracking-tight">
@@ -487,7 +504,7 @@ const App: React.FC = () => {
               {isLoadingCookBook ? (
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center">
-                    <div className="w-12 h-12 border-4 border-lime-200 border-t-lime-600 rounded-full animate-spin mx-auto mb-4"></div>
+                    <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin mx-auto mb-4"></div>
                     <p className="text-gray-500">Đang tải...</p>
                   </div>
                 </div>
@@ -498,6 +515,13 @@ const App: React.FC = () => {
                   onView={setSelectedRecipe}
                 />
               )}
+            </div>
+          ) : activeTab === Tab.MEAL_PLAN ? (
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+              <MealPlanView
+                cookbook={cookBook}
+                onViewRecipe={setSelectedRecipe}
+              />
             </div>
           ) : (
             <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">

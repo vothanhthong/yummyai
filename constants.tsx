@@ -16,16 +16,17 @@ import {
   SparklesIcon,
   UserIcon,
   EllipsisVerticalIcon,
+  CalendarDaysIcon,
 } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
 
 export const COLORS = {
-  primary: '#8FA31E',      // Lime Green
-  secondary: '#556B2F',    // Dark Olive
-  accent: '#C6D870',       // Light Lime
-  background: '#EFF5D2',   // Cream/Light
-  text: '#556B2F',         // Dark Olive
-  light: '#EFF5D2'         // Cream
+  primary: '#FF8C42',      // Tangerine Orange
+  secondary: '#FCBF49',    // Sunny Yellow
+  accent: '#FCBF49',       // Sunny Yellow
+  background: '#FFF9F0',   // Soft Cream
+  text: '#2B2D42',         // Dark Slate
+  dark: '#2B2D42'          // Dark Slate
 };
 
 export const Icons = {
@@ -51,5 +52,6 @@ export const Icons = {
   Login: () => <ArrowRightOnRectangleIcon className="w-[18px] h-[18px]" />,
   Logo: (props: { className?: string }) => <SparklesIcon className={props.className || "w-6 h-6"} />,
   User: (props: { className?: string }) => <UserIcon className={props.className || "w-6 h-6"} />,
-  MoreVertical: () => <EllipsisVerticalIcon className="w-5 h-5" />
+  MoreVertical: () => <EllipsisVerticalIcon className="w-5 h-5" />,
+  Calendar: () => <CalendarDaysIcon className="w-6 h-6" />
 };

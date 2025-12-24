@@ -42,8 +42,21 @@ export interface QuickSuggestion {
   updated_at?: string;
 }
 
+export type MealType = 'breakfast' | 'lunch' | 'dinner';
+
+export interface MealPlan {
+  id: string;
+  user_id: string;
+  date: string;
+  meal_type: MealType;
+  recipe_data: Recipe;
+  notes?: string;
+  created_at?: string;
+}
+
 export enum Tab {
   CHAT = 'chat',
   COOKBOOK = 'cookbook',
-  SUGGESTIONS = 'suggestions'
+  SUGGESTIONS = 'suggestions',
+  MEAL_PLAN = 'meal_plan'
 }

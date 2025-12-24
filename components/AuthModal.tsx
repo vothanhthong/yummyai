@@ -79,7 +79,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </button>
 
         <div className="text-center mb-6">
-          <div className="bg-lime-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-lime-100">
+          <div className="bg-orange-500 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-orange-100">
             <Icons.Logo className="w-8 h-8 text-white" />
           </div>
           <h2 className="text-2xl font-black text-gray-900 mb-2">
@@ -141,7 +141,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Nhập tên của bạn"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:bg-white transition-all text-sm"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-sm"
                 required
               />
             </div>
@@ -156,7 +156,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="email@example.com"
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:bg-white transition-all text-sm"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-sm"
               required
             />
           </div>
@@ -170,7 +170,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Nhập mật khẩu"
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:bg-white transition-all text-sm"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-sm"
               required
               minLength={6}
             />
@@ -185,7 +185,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-lime-600 text-white py-4 rounded-2xl font-bold hover:bg-lime-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-lg shadow-lime-100 active:scale-95"
+            className="w-full bg-orange-500 text-white py-4 rounded-2xl font-bold hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-lg shadow-orange-100 active:scale-95"
           >
             {loading
               ? "Đang xử lý..."

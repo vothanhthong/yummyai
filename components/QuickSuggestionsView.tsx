@@ -117,7 +117,7 @@ export const QuickSuggestionsView: React.FC<QuickSuggestionsViewProps> = ({
             <h1 className="text-3xl font-black text-gray-800">Gợi ý nhanh ⚡</h1>
             <p className="text-gray-500 mt-1">Tùy chỉnh các nút gợi ý nhanh trong chat.</p>
           </div>
-          <div className="bg-lime-50 text-lime-700 px-4 py-2 rounded-2xl font-bold border border-lime-100 text-sm self-start">
+          <div className="bg-orange-50 text-orange-600 px-4 py-2 rounded-2xl font-bold border border-orange-100 text-sm self-start">
             {suggestions.length} gợi ý
           </div>
         </div>
@@ -127,7 +127,7 @@ export const QuickSuggestionsView: React.FC<QuickSuggestionsViewProps> = ({
       {!isAdding && (
         <button
           onClick={() => setIsAdding(true)}
-          className="w-full mb-6 py-4 border-2 border-dashed border-gray-200 rounded-2xl text-gray-400 font-bold hover:border-lime-300 hover:text-lime-600 transition-all flex items-center justify-center gap-2"
+          className="w-full mb-6 py-4 border-2 border-dashed border-gray-200 rounded-2xl text-gray-400 font-bold hover:border-orange-300 hover:text-orange-500 transition-all flex items-center justify-center gap-2"
         >
           <span className="text-xl">+</span>
           Thêm gợi ý mới
@@ -148,7 +148,7 @@ export const QuickSuggestionsView: React.FC<QuickSuggestionsViewProps> = ({
                 value={newLabel}
                 onChange={(e) => setNewLabel(e.target.value)}
                 placeholder="VD: 🍳 Ăn sáng"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:bg-white transition-all text-sm"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-sm"
                 maxLength={50}
               />
             </div>
@@ -160,7 +160,7 @@ export const QuickSuggestionsView: React.FC<QuickSuggestionsViewProps> = ({
                 value={newPrompt}
                 onChange={(e) => setNewPrompt(e.target.value)}
                 placeholder="VD: Gợi ý cho mình món ăn sáng đơn giản"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:bg-white transition-all text-sm resize-none"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-sm resize-none"
                 rows={3}
               />
             </div>
@@ -178,7 +178,7 @@ export const QuickSuggestionsView: React.FC<QuickSuggestionsViewProps> = ({
               <button
                 onClick={handleAdd}
                 disabled={isSaving || !newLabel.trim() || !newPrompt.trim()}
-                className="flex-1 py-3 px-4 bg-lime-600 hover:bg-lime-700 disabled:bg-gray-300 text-white font-bold rounded-2xl transition-all shadow-lg shadow-lime-100 text-sm"
+                className="flex-1 py-3 px-4 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 text-white font-bold rounded-2xl transition-all shadow-lg shadow-orange-100 text-sm"
               >
                 {isSaving ? "Đang lưu..." : "Thêm"}
               </button>
@@ -191,13 +191,13 @@ export const QuickSuggestionsView: React.FC<QuickSuggestionsViewProps> = ({
       {isLoading ? (
         <div className="flex items-center justify-center py-20">
           <div className="text-center">
-            <div className="w-12 h-12 border-4 border-lime-200 border-t-lime-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin mx-auto mb-4"></div>
             <p className="text-gray-500">Đang tải...</p>
           </div>
         </div>
       ) : suggestions.length === 0 ? (
         <div className="bg-white rounded-[40px] p-16 text-center border-2 border-dashed border-gray-100 flex flex-col items-center">
-          <div className="w-24 h-24 bg-lime-50 rounded-full flex items-center justify-center mb-6 text-lime-200">
+          <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center mb-6 text-orange-200">
             <Icons.Chat />
           </div>
           <h3 className="text-2xl font-black text-gray-800 mb-2">Chưa có gợi ý nào</h3>
@@ -223,7 +223,7 @@ export const QuickSuggestionsView: React.FC<QuickSuggestionsViewProps> = ({
                       type="text"
                       value={editLabel}
                       onChange={(e) => setEditLabel(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:bg-white transition-all text-sm"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-sm"
                       maxLength={50}
                     />
                   </div>
@@ -234,7 +234,7 @@ export const QuickSuggestionsView: React.FC<QuickSuggestionsViewProps> = ({
                     <textarea
                       value={editPrompt}
                       onChange={(e) => setEditPrompt(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:bg-white transition-all text-sm resize-none"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-sm resize-none"
                       rows={3}
                     />
                   </div>
@@ -248,7 +248,7 @@ export const QuickSuggestionsView: React.FC<QuickSuggestionsViewProps> = ({
                     <button
                       onClick={handleSaveEdit}
                       disabled={isSaving || !editLabel.trim() || !editPrompt.trim()}
-                      className="flex-1 py-2.5 px-4 bg-lime-600 hover:bg-lime-700 disabled:bg-gray-300 text-white font-bold rounded-xl transition-all text-sm"
+                      className="flex-1 py-2.5 px-4 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 text-white font-bold rounded-xl transition-all text-sm"
                     >
                       {isSaving ? "Đang lưu..." : "Lưu"}
                     </button>
@@ -259,7 +259,7 @@ export const QuickSuggestionsView: React.FC<QuickSuggestionsViewProps> = ({
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-lime-50 text-lime-700 px-3 py-1.5 rounded-full text-sm font-bold border border-lime-100">
+                      <span className="bg-orange-50 text-orange-600 px-3 py-1.5 rounded-full text-sm font-bold border border-orange-100">
                         {suggestion.label}
                       </span>
                     </div>
@@ -270,7 +270,7 @@ export const QuickSuggestionsView: React.FC<QuickSuggestionsViewProps> = ({
                   <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={() => handleEdit(suggestion)}
-                      className="p-2.5 text-gray-400 hover:text-lime-600 hover:bg-lime-50 rounded-xl transition-all"
+                      className="p-2.5 text-gray-400 hover:text-orange-500 hover:bg-orange-50 rounded-xl transition-all"
                       title="Chỉnh sửa"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">

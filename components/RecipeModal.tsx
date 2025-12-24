@@ -46,7 +46,7 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, onClose, onSav
         onClick={e => e.stopPropagation()}
       >
         {/* Header - Độ cao linh hoạt cho mâm cơm dài */}
-        <div className="relative min-h-[10rem] sm:min-h-[14rem] md:min-h-[16rem] bg-lime-600 flex items-end p-5 sm:p-8 pt-12 sm:pt-16">
+        <div className="relative min-h-[10rem] sm:min-h-[14rem] md:min-h-[16rem] bg-orange-500 flex items-end p-5 sm:p-8 pt-12 sm:pt-16">
           <button 
             onClick={handleClose}
             className="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full transition-colors z-20"
@@ -75,35 +75,35 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, onClose, onSav
             <p className="text-gray-600 text-sm sm:text-lg italic leading-relaxed">"{recipe.description}"</p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-lime-50 rounded-2xl border border-lime-100">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-orange-50 rounded-2xl border border-orange-100">
              <div className="flex flex-col items-center gap-1">
-                <span className="text-lime-500"><Icons.Timer /></span>
-                <span className="text-[10px] sm:text-xs text-lime-800 font-bold text-center">{recipe.cooking_time} phút</span>
+                <span className="text-orange-500"><Icons.Timer /></span>
+                <span className="text-[10px] sm:text-xs text-orange-700 font-bold text-center">{recipe.cooking_time} phút</span>
              </div>
              <div className="flex flex-col items-center gap-1">
-                <span className="text-lime-500"><Icons.Chef /></span>
-                <span className="text-[10px] sm:text-xs text-lime-800 font-bold text-center">{recipe.difficulty}</span>
+                <span className="text-orange-500"><Icons.Chef /></span>
+                <span className="text-[10px] sm:text-xs text-orange-700 font-bold text-center">{recipe.difficulty}</span>
              </div>
              <div className="flex flex-col items-center gap-1">
-                <span className="text-lime-500"><Icons.Check /></span>
-                <span className="text-[10px] sm:text-xs text-lime-800 font-bold text-center">{recipe.ingredients.length} món</span>
+                <span className="text-orange-500"><Icons.Check /></span>
+                <span className="text-[10px] sm:text-xs text-orange-700 font-bold text-center">{recipe.ingredients.length} món</span>
              </div>
              <div className="flex flex-col items-center gap-1">
-                <span className="text-lime-500"><Icons.Book /></span>
-                <span className="text-[10px] sm:text-xs text-lime-800 font-bold text-center">{recipe.instructions.length} bước</span>
+                <span className="text-orange-500"><Icons.Book /></span>
+                <span className="text-[10px] sm:text-xs text-orange-700 font-bold text-center">{recipe.instructions.length} bước</span>
              </div>
           </div>
 
           <section>
             <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <div className="w-1.5 h-5 bg-lime-600 rounded-full" />
+              <div className="w-1.5 h-5 bg-orange-500 rounded-full" />
               Nguyên liệu
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
               {recipe.ingredients.map((ing, i) => (
                 <div key={i} className="flex items-center justify-between p-2.5 bg-gray-50 rounded-xl border border-gray-100">
                   <span className="text-gray-700 text-sm font-medium">{ing.item}</span>
-                  <span className="text-lime-700 font-bold text-[11px] bg-lime-100 px-2 py-0.5 rounded-lg">{ing.amount}</span>
+                  <span className="text-orange-600 font-bold text-[11px] bg-orange-100 px-2 py-0.5 rounded-lg">{ing.amount}</span>
                 </div>
               ))}
             </div>
@@ -111,13 +111,13 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, onClose, onSav
 
           <section>
             <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <div className="w-1.5 h-5 bg-lime-600 rounded-full" />
+              <div className="w-1.5 h-5 bg-orange-500 rounded-full" />
               Cách làm
             </h3>
             <div className="space-y-4 sm:space-y-6">
               {recipe.instructions.map((step, i) => (
                 <div key={i} className="flex gap-3 sm:gap-4">
-                  <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-lime-600 text-white rounded-full flex items-center justify-center font-bold text-xs sm:text-sm shadow-md shadow-lime-100">
+                  <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-xs sm:text-sm shadow-md shadow-orange-100">
                     {i + 1}
                   </div>
                   <p className="text-gray-700 text-sm sm:text-base leading-relaxed pt-0.5 sm:pt-1">{step}</p>
@@ -127,14 +127,14 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, onClose, onSav
           </section>
 
           {recipe.tips && recipe.tips.length > 0 && (
-            <section className="bg-lime-50 p-4 sm:p-6 rounded-2xl border border-lime-100 mb-4">
-              <h3 className="text-base sm:text-lg font-bold text-lime-800 mb-3 flex items-center gap-2">
+            <section className="bg-orange-50 p-4 sm:p-6 rounded-2xl border border-orange-100 mb-4">
+              <h3 className="text-base sm:text-lg font-bold text-orange-700 mb-3 flex items-center gap-2">
                 💡 Mẹo nhỏ
               </h3>
               <ul className="space-y-2">
                 {recipe.tips.map((tip, i) => (
-                  <li key={i} className="text-lime-800 text-[13px] sm:text-sm flex gap-2">
-                    <span className="text-lime-600">•</span>
+                  <li key={i} className="text-orange-700 text-[13px] sm:text-sm flex gap-2">
+                    <span className="text-orange-500">•</span>
                     {tip}
                   </li>
                 ))}
@@ -148,7 +148,7 @@ export const RecipeModal: React.FC<RecipeModalProps> = ({ recipe, onClose, onSav
            {onSave && !isSaved && (
              <button 
                onClick={() => onSave(recipe)}
-               className="flex-1 flex items-center justify-center gap-2 bg-lime-600 hover:bg-lime-700 text-white font-bold py-3 px-6 rounded-xl sm:rounded-2xl transition-all shadow-lg shadow-lime-100 text-sm sm:text-base order-1 sm:order-none active:scale-95"
+               className="flex-1 flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-xl sm:rounded-2xl transition-all shadow-lg shadow-orange-100 text-sm sm:text-base order-1 sm:order-none active:scale-95"
              >
                <Icons.Heart />
                Lưu vào Sổ tay

@@ -18,7 +18,7 @@ interface DropdownProps {
   value: string;
   options: { value: string; label: string }[];
   onChange: (value: string) => void;
-  colorScheme: 'lime' | 'olive';
+  colorScheme: 'orange' | 'amber';
 }
 
 const CustomDropdown: React.FC<DropdownProps> = ({ value, options, onChange, colorScheme }) => {
@@ -26,24 +26,24 @@ const CustomDropdown: React.FC<DropdownProps> = ({ value, options, onChange, col
   
   const selectedLabel = options.find(opt => opt.value === value)?.label || '';
   
-  const colors = colorScheme === 'lime' 
+  const colors = colorScheme === 'orange' 
     ? {
-        bg: 'bg-lime-50/50',
-        border: 'border-lime-200',
-        text: 'text-lime-800',
-        hoverBg: 'hover:bg-lime-100',
-        selectedBg: 'bg-lime-100',
-        icon: 'text-lime-600',
-        focusRing: 'ring-lime-500'
+        bg: 'bg-orange-50/50',
+        border: 'border-orange-200',
+        text: 'text-orange-700',
+        hoverBg: 'hover:bg-orange-100',
+        selectedBg: 'bg-orange-100',
+        icon: 'text-orange-500',
+        focusRing: 'ring-orange-500'
       }
     : {
-        bg: 'bg-green-50/50',
-        border: 'border-green-200',
-        text: 'text-green-800',
-        hoverBg: 'hover:bg-green-100',
-        selectedBg: 'bg-green-100',
-        icon: 'text-green-600',
-        focusRing: 'ring-green-500'
+        bg: 'bg-amber-50/50',
+        border: 'border-amber-200',
+        text: 'text-amber-700',
+        hoverBg: 'hover:bg-amber-100',
+        selectedBg: 'bg-amber-100',
+        icon: 'text-amber-500',
+        focusRing: 'ring-amber-500'
       };
 
   return (
@@ -169,7 +169,7 @@ export const CookBookView: React.FC<CookBookViewProps> = ({ recipes, onDelete, o
             <h1 className="text-3xl font-black text-gray-800">Sổ tay của bạn 📖</h1>
             <p className="text-gray-500 mt-1">Lưu trữ tất cả các món ăn yêu thích tại đây.</p>
           </div>
-          <div className="bg-lime-50 text-lime-700 px-4 py-2 rounded-2xl font-bold border border-lime-100 text-sm self-start">
+          <div className="bg-orange-50 text-orange-600 px-4 py-2 rounded-2xl font-bold border border-orange-100 text-sm self-start">
             {recipes.length} món đã lưu
           </div>
         </div>
@@ -187,7 +187,7 @@ export const CookBookView: React.FC<CookBookViewProps> = ({ recipes, onDelete, o
                 placeholder="Tìm tên món ăn..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-lime-500 focus:bg-white transition-all"
+                className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all"
               />
             </div>
 
@@ -200,7 +200,7 @@ export const CookBookView: React.FC<CookBookViewProps> = ({ recipes, onDelete, o
                   value={activeType}
                   options={mealTypeOptions}
                   onChange={(value) => setActiveType(value as FilterType)}
-                  colorScheme="lime"
+                  colorScheme="orange"
                 />
               </div>
 
@@ -211,7 +211,7 @@ export const CookBookView: React.FC<CookBookViewProps> = ({ recipes, onDelete, o
                   value={activeDiff}
                   options={difficultyOptions}
                   onChange={(value) => setActiveDiff(value as DifficultyFilter)}
-                  colorScheme="olive"
+                  colorScheme="amber"
                 />
               </div>
             </div>
@@ -221,7 +221,7 @@ export const CookBookView: React.FC<CookBookViewProps> = ({ recipes, onDelete, o
 
       {recipes.length === 0 ? (
         <div className="bg-white rounded-[40px] p-16 text-center border-2 border-dashed border-gray-100 flex flex-col items-center">
-          <div className="w-24 h-24 bg-lime-50 rounded-full flex items-center justify-center mb-6 text-lime-200">
+          <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center mb-6 text-orange-200">
              <Icons.Book />
           </div>
           <h3 className="text-2xl font-black text-gray-800 mb-2">Chưa có công thức nào</h3>
@@ -237,7 +237,7 @@ export const CookBookView: React.FC<CookBookViewProps> = ({ recipes, onDelete, o
           <p className="text-gray-500 font-medium">Không tìm thấy món ăn phù hợp với bộ lọc.</p>
           <button 
             onClick={() => { setActiveType('all'); setActiveDiff('all'); setSearchQuery(''); }}
-            className="mt-4 text-lime-600 font-bold hover:underline"
+            className="mt-4 text-orange-500 font-bold hover:underline"
           >
             Xóa tất cả bộ lọc
           </button>
