@@ -2,7 +2,7 @@ import { Recipe } from "../types";
 
 const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const MODEL = "google/gemini-2.0-flash-exp:free";
+const MODEL = "nvidia/nemotron-nano-12b-v2-vl:free";
 
 const SYSTEM_INSTRUCTION = `
 Bạn là YummyAI, một trợ lý nấu ăn chuyên gia người Việt.
