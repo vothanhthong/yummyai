@@ -31,7 +31,9 @@ export const ChatView: React.FC<ChatViewProps> = ({
   const [hasMoreMessages, setHasMoreMessages] = useState(false);
   const [oldestTimestamp, setOldestTimestamp] = useState<number | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const loadMoreTriggerRef = useRef<HTMLDivElement>(null);
@@ -165,9 +167,31 @@ export const ChatView: React.FC<ChatViewProps> = ({
     saveToSupabase();
   }, [messages, isInitialized]);
 
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Ảnh quá lớn, vui loại chọn ảnh dưới 5MB");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeSelectedImage = () => {
+    setSelectedImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const handleSend = async (customText?: string) => {
     const textToSend = customText || input;
-    if (!textToSend.trim() || isLoading) return;
+    if ((!textToSend.trim() && !selectedImage) || isLoading) return;
 
     shouldScrollToBottom.current = true; // Scroll to bottom for new messages
 
@@ -175,12 +199,16 @@ export const ChatView: React.FC<ChatViewProps> = ({
       id: Date.now().toString(),
       role: "user",
       content: textToSend,
+      image_data: selectedImage || undefined,
       timestamp: Date.now(),
     };
 
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
     setInput("");
+    const currentSelectedImage = selectedImage;
+    setSelectedImage(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
     setIsLoading(true);
 
     const history = messages.slice(-6).map((m) => ({
@@ -193,9 +221,10 @@ export const ChatView: React.FC<ChatViewProps> = ({
       .map((m) => m.recipe?.name || "");
 
     const response = await getChatResponse(
-      textToSend,
+      textToSend || (currentSelectedImage ? "Hãy phân tích các nguyên liệu trong ảnh này và gợi ý món ăn giúp mình." : ""),
       history,
-      recentlySuggested
+      recentlySuggested,
+      currentSelectedImage || undefined
     );
 
     const assistantMessage: Message = {
@@ -257,6 +286,11 @@ export const ChatView: React.FC<ChatViewProps> = ({
                   : "bg-gray-100 text-gray-800 rounded-tl-none"
               }`}
             >
+              {msg.image_data && (
+                <div className="mb-3 rounded-xl overflow-hidden shadow-sm">
+                  <img src={msg.image_data} alt="Sent" className="w-full h-auto max-h-64 object-cover" />
+                </div>
+              )}
               <p className="text-sm md:text-base whitespace-pre-wrap leading-relaxed">
                 {msg.content}
               </p>
@@ -309,18 +343,48 @@ export const ChatView: React.FC<ChatViewProps> = ({
           ))}
         </div>
 
+        {selectedImage && (
+          <div className="relative inline-block mb-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-orange-500 shadow-lg relative bg-gray-50">
+              <img src={selectedImage} alt="Selected" className="w-full h-full object-cover" />
+            </div>
+            <button
+              onClick={removeSelectedImage}
+              className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full shadow-lg hover:bg-red-600 transition-colors z-10"
+            >
+              <Icons.Close className="w-3 h-3" />
+            </button>
+          </div>
+        )}
+
         <div className="flex items-center gap-3">
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleImageSelect}
+            accept="image/*"
+            capture="environment"
+            className="hidden"
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isLoading}
+            className="flex-shrink-0 p-4 bg-gray-100 text-gray-600 rounded-2xl hover:bg-gray-200 transition-all active:scale-95 disabled:opacity-50"
+            aria-label="Take Photo"
+          >
+            <Icons.Camera />
+          </button>
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            placeholder="Bạn muốn nấu gì hôm nay?..."
+            placeholder={selectedImage ? "Nói gì đó về ảnh này..." : "Bạn muốn nấu gì hôm nay?..."}
             className="flex-1 min-w-0 px-5 py-4 bg-gray-50 text-gray-900 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all text-sm md:text-base shadow-inner"
           />
           <button
             onClick={() => handleSend()}
-            disabled={!input.trim() || isLoading}
+            disabled={(!input.trim() && !selectedImage) || isLoading}
             className="flex-shrink-0 p-4 bg-orange-500 text-white rounded-2xl hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-lg shadow-orange-100 active:scale-95"
             aria-label="Send"
           >

@@ -21,6 +21,7 @@ export interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  image_data?: string;
   recipe?: Recipe;
   timestamp: number;
 }

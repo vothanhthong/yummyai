@@ -17,6 +17,7 @@ import {
   UserIcon,
   EllipsisVerticalIcon,
   CalendarDaysIcon,
+  CameraIcon,
 } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
 
@@ -53,5 +54,6 @@ export const Icons = {
   Logo: (props: { className?: string }) => <img src="/logo.png" className={props.className || "w-6 h-6"} alt="YummyAI Logo" />,
   User: (props: { className?: string }) => <UserIcon className={props.className || "w-6 h-6"} />,
   MoreVertical: () => <EllipsisVerticalIcon className="w-5 h-5" />,
-  Calendar: () => <CalendarDaysIcon className="w-6 h-6" />
+  Calendar: () => <CalendarDaysIcon className="w-6 h-6" />,
+  Camera: () => <CameraIcon className="w-6 h-6" />
 };

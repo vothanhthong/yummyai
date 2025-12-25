@@ -2,7 +2,7 @@ import { Recipe } from "../types";
 
 const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const MODEL = "mistralai/devstral-2512:free";
+const MODEL = "google/gemini-2.0-flash-exp:free";
 
 const SYSTEM_INSTRUCTION = `
 Bạn là YummyAI, một trợ lý nấu ăn chuyên gia người Việt.
@@ -86,7 +86,8 @@ const RESPONSE_SCHEMA = {
 export const getChatResponse = async (
   userMessage: string,
   history: { role: "user" | "model"; content: string }[],
-  recentlySuggested: string[]
+  recentlySuggested: string[],
+  image_data?: string
 ) => {
   try {
     if (!API_KEY) {
@@ -100,13 +101,28 @@ export const getChatResponse = async (
           )}]. Hãy gợi ý một lựa chọn KHÁC các món này.`
         : "";
 
+    const userContent: any[] = [
+      { type: "text", text: userMessage + avoidanceInstruction }
+    ];
+
+    if (image_data) {
+      // image_data should be a base64 string (without the data:image/xxx;base64, prefix if possible, 
+      // but OpenRouter often accepts the full data URL or an object with data)
+      userContent.push({
+        type: "image_url",
+        image_url: {
+          url: image_data.startsWith('data:') ? image_data : `data:image/jpeg;base64,${image_data}`
+        }
+      });
+    }
+
     const messages = [
       { role: "system" as const, content: SYSTEM_INSTRUCTION },
       ...history.map((m) => ({
         role: m.role === "user" ? "user" : "assistant",
         content: m.content,
       })),
-      { role: "user" as const, content: userMessage + avoidanceInstruction },
+      { role: "user" as const, content: userContent },
     ];
 
     const response = await fetch(API_URL, {
