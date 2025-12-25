@@ -50,7 +50,7 @@ export const Icons = {
   ),
   ChevronDown: () => <ChevronDownIcon className="w-4 h-4" />,
   Login: () => <ArrowRightOnRectangleIcon className="w-[18px] h-[18px]" />,
-  Logo: (props: { className?: string }) => <SparklesIcon className={props.className || "w-6 h-6"} />,
+  Logo: (props: { className?: string }) => <img src="/logo.png" className={props.className || "w-6 h-6"} alt="YummyAI Logo" />,
   User: (props: { className?: string }) => <UserIcon className={props.className || "w-6 h-6"} />,
   MoreVertical: () => <EllipsisVerticalIcon className="w-5 h-5" />,
   Calendar: () => <CalendarDaysIcon className="w-6 h-6" />
